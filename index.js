@@ -1,6 +1,6 @@
-import floyd from "./floyd.js";
-import TSP_Greedy from "./tspGreedy.js";
-import busquedaLocal from "./busquedaLocal.js";
+import floyd from "./src/floyd.js";
+import TSP_Greedy from "./src/tspGreedy.js";
+import busquedaLocal from "./src/busquedaLocal.js";
 
 const X = Infinity;
 
