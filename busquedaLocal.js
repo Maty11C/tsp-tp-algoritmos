@@ -1,41 +1,49 @@
-import TSP_Greedy from "./tspGreedy.js";
+import { costoSwap } from "./costo.js";
 
-const X = Infinity;
-let M = [
-  [0, 1, 2, X],
-  [1, 0, X, 3],
-  [2, X, 0, X],
-  [X, 3, X, 0],
-];
-
-const [circuito, costo] = TSP_Greedy(M);
-
-console.log("Solución: ", circuito);
-console.log("Costo: ", costo);
-
-//-------------------------------------------------------------------
-const swap = (nodos, i, j) => {
-  let newArray = nodos.map((x) => x);
-  var x = newArray[j];
-  newArray[j] = newArray[i];
-  newArray[i] = x;
-  return newArray;
+const swap = (solucion, i, j) => {
+  let nuevaSolucion = solucion.map((x) => x);
+  var x = nuevaSolucion[j];
+  nuevaSolucion[j] = nuevaSolucion[i];
+  nuevaSolucion[i] = x;
+  return nuevaSolucion;
 };
 
-const generarVecinos = (nodos) => {
-  let vecinos = [];
-  for (let index = 1; index < nodos.length - 2; index++) {
-    let vecino = swap(nodos, index, index + 1);
-    vecinos.push(vecino);
+//Genera soluciones vecinas intercambiando nodos consecutivos que no sean ni el primero ni el último
+const generarSolucionesVecinas = (M, solucion_costo) => {
+  let { solucion, costo } = solucion_costo;
+  let soluciones_costos = [];
+  for (let index = 1; index < solucion.length - 2; index++) {
+    let nuevaSolucion = swap(solucion_costo.solucion, index, index + 1);
+    let nuevoCosto = costoSwap(M, solucion, costo, index, index + 1);
+    soluciones_costos.push({ solucion: nuevaSolucion, costo: nuevoCosto });
   }
-  return vecinos;
+  return soluciones_costos;
 };
 
-console.log(generarVecinos(circuito));
+//Retorna la mejor solucion en base al menor costo
+const seleccionarMejorSolucion = (soluciones_costos) =>
+  soluciones_costos.reduce((prev, curr) =>
+    prev.costo < curr.costo ? prev : curr
+  );
 
-//-------------------------------------------------------------------
-//TODO: Hacer algoritmo que vaya generando vecinos y se quede sucesivamente con el mejor, si existe, sino que corte
+//Genera los vecinos, elige el mejor y lo compara con la solucion actual...
+// - Si el mejor vecino es de menor costo, lo elijo y hago recursion para intentar obtener otro mejor
+// - Sino retorna la solucion actual
+const busquedaLocal = (M, solucion_costo) => {
+  let solucionVecinas_costosVecinos = generarSolucionesVecinas(
+    M,
+    solucion_costo
+  );
+  let mejorSolucion_mejorCosto = seleccionarMejorSolucion(
+    solucionVecinas_costosVecinos
+  );
+  return mejorSolucion_mejorCosto.costo < solucion_costo.costo
+    ? busquedaLocal(M, mejorSolucion_mejorCosto)
+    : solucion_costo;
+};
 
-const busquedaLocal = (solucion) => {
-    
-}
+export default busquedaLocal;
+
+//4- Elegir una condicion de corte para la busqueda local
+
+//Elegir un criterio de parada para grasp

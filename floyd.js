@@ -1,4 +1,4 @@
-const floyd_BT = (M) => {
+const floyd = (M) => {
   const n = M.length;
 
   const distance = Array.from(new Array(n), () => new Array(n).fill(0));
@@ -17,4 +17,4 @@ const floyd_BT = (M) => {
   return distance;
 };
 
-export default floyd_BT;
+export default floyd;
