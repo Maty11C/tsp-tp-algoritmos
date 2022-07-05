@@ -94,7 +94,7 @@ const TSP_Greedy = (grafo) => {
   res.push(source); //Agrego el nodo source para formar el circuito
 
   return {
-    solucion: res,
+    circuito: res,
     costo: costo(M, res),
   };
 };
