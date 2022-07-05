@@ -69,20 +69,18 @@ const seleccionAleatoria = (nodos, porcentaje, elementosMinimos) => {
 };
 
 // Algoritmo greedy para problema de viajante de comercio-------------------------------------------------
-const TSP_Greedy = (M) => {
-  const n = M.length;
-  const V = Array.from(Array(n).keys());
-
+const TSP_Greedy = (grafo) => {
+  const M = grafo.grafoCompleto
   let res = []; //Inicializo array vacio para la solucion
   let visited = new Set(); //Inicializo set vacio para los nodos visitados
 
-  let source = V[0]; //Empiezo por el primer nodo de la matriz
-  visited.add(source); //Marco el nodo source como visitado
+  let source = grafo.nodos[0]; //Empiezo por el primer nodo del grafo
+  visited.add(source); //Agrego el nodo source a los visitados
   res.push(source); //Agrego el nodo source a la solucion
 
   let index = source;
   //Itero hasta haber visitado todos los nodos
-  while (visited.size < n) {
+  while (visited.size < grafo.cantidadDeNodos) {
     let ady = adyacentesNoVisitados(M, index, visited); //Obtengo mis nodos adyacentes que no fueron visitados...
 
     let adyacentesOrdenados = ordenarPorSumaPesosMinimos(ady, M, index); //...Los ordeno por mi heuristica
