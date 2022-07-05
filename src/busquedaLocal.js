@@ -43,7 +43,3 @@ const busquedaLocal = (M, solucion_costo) => {
 };
 
 export default busquedaLocal;
-
-//4- Elegir una condicion de corte para la busqueda local
-
-//Elegir un criterio de parada para grasp
