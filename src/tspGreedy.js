@@ -1,5 +1,3 @@
-import { costo } from "./costo.js";
-
 // Retorna los adyacentes de un nodo
 const adyacentes = (M, i) =>
   M[i]
@@ -68,8 +66,21 @@ const seleccionAleatoria = (nodos, porcentaje, elementosMinimos) => {
   return elems[Math.floor(Math.random() * elems.length)]; //Obtengo un elem al azar entre los elegidos
 };
 
+//Calcula el costo de recorrer todos los nodos ---------------------------
+export const costo = (M, res) => {
+  let sum = 0;
+  let i = 0;
+  while (i < res.length - 1) {
+    let current = res[i];
+    let next = res[i + 1];
+    sum += M[current][next];
+    i++;
+  }
+  return sum;
+};
+
 // Algoritmo greedy para problema de viajante de comercio-------------------------------------------------
-const TSP_Greedy = (grafo) => {
+const tspGreedy = (grafo) => {
   const M = grafo.grafoCompleto
   let res = []; //Inicializo array vacio para la solucion
   let visited = new Set(); //Inicializo set vacio para los nodos visitados
@@ -99,4 +110,4 @@ const TSP_Greedy = (grafo) => {
   };
 };
 
-export default TSP_Greedy;
+export default tspGreedy;

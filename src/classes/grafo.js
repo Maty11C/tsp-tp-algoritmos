@@ -1,4 +1,4 @@
-import floyd from "./floyd.js";
+import floyd from "../utils/floyd.js";
 
 export class Grafo {
   constructor(M) {

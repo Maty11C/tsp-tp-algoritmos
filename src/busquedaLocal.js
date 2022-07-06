@@ -1,11 +1,24 @@
-import { costoSwap } from "./costo.js";
-
 const swap = (circuito, i, j) => {
   let nuevoCircuito = circuito.map((x) => x);
   var x = nuevoCircuito[j];
   nuevoCircuito[j] = nuevoCircuito[i];
   nuevoCircuito[i] = x;
   return nuevoCircuito;
+};
+
+//Calcula el costo de la solución con los nodos i y j intercambiados
+export const costoSwap = (M, solucion, costo, i, j) => {
+  let nuevoCosto = costo;
+
+  let peso1Resta = M[solucion[i - 1]][solucion[i]];
+  let peso2Resta = M[solucion[j]][solucion[j + 1]];
+  nuevoCosto = nuevoCosto - peso1Resta - peso2Resta;
+
+  let peso1Suma = M[solucion[i - 1]][solucion[j]];
+  let peso2Suma = M[solucion[i]][solucion[j + 1]];
+  nuevoCosto = nuevoCosto + peso1Suma + peso2Suma;
+
+  return nuevoCosto;
 };
 
 //Genera soluciones vecinas intercambiando nodos consecutivos que no sean ni el primero ni el último
@@ -56,6 +69,8 @@ const busquedaLocal = (
       ejecuciones < ejecucionesMaximas &&
       porcentajeDeMejora > 0 &&
       porcentajeDeMejora > porcentajeMinimoDeMejora;
+
+    //TODO: No comparar con la ultima ejecución y comparar con las ultimas 10 por ejemplo
   }
 
   return mejorSolucion;

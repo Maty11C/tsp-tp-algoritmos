@@ -9,5 +9,9 @@
   },
   "author": "Matías Cabrera",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "xml-js": "^1.6.11"
+  }
 }
