@@ -41,36 +41,55 @@ const encontrarMejorVecino = (M, solucion) => {
   );
 };
 
+const noMejora = (mejorSolucionVecina, solucion) =>
+  mejorSolucionVecina.costo >= solucion.costo;
+
+const mejoraPoco = (
+  mejorSolucionVecina,
+  solucion,
+  porcentajeMinimoDeMejora
+) => {
+  const porcentajeDeMejora =
+    100 - (mejorSolucionVecina.costo * 100) / solucion.costo;
+  return porcentajeDeMejora < porcentajeMinimoDeMejora;
+};
+
 //Genera los vecinos, elige el mejor y lo compara con la solucion actual...
-// - Si el mejor vecino es de menor costo, lo elijo y hago recursion para intentar obtener otro mejor
-// - Sino retorna la solucion actual
+// - Si el mejor vecino es de menor costo, lo elijo,
+// - Si el mejor vecino no mejora o mejora poco, vuelve a intentar y ejecuta otra busqueda local.
+// - Si despues de n intentos más sigue sin conseguir un porcentaje de mejora aceptable, retorna la mejor solucion encontrada hasta el momento
 const busquedaLocal = (
   M,
   solucion,
-  ejecucionesMaximas,
+  ejecucionesPermitidas,
+  ejecucionesParcialesPermitidas,
   porcentajeMinimoDeMejora
 ) => {
-  let mejorSolucion = solucion;
   let ejecuciones = 0;
-  let continuar = true;
+  let ejecucionesParciales = 0;
 
-  while (continuar) {
+  let mejorSolucion = solucion;
+
+  while (
+    ejecuciones < ejecucionesPermitidas &&
+    ejecucionesParciales < ejecucionesParcialesPermitidas
+  ) {
     ejecuciones++;
+    ejecucionesParciales++;
 
     let mejorSolucionVecina = encontrarMejorVecino(M, mejorSolucion);
 
     if (mejorSolucionVecina.costo < solucion.costo)
       mejorSolucion = mejorSolucionVecina;
 
-    const porcentajeDeMejora =
-      100 - (mejorSolucionVecina.costo * 100) / solucion.costo;
-
-    continuar =
-      ejecuciones < ejecucionesMaximas &&
-      porcentajeDeMejora > 0 &&
-      porcentajeDeMejora > porcentajeMinimoDeMejora;
-
-    //TODO: No comparar con la ultima ejecución y comparar con las ultimas 10 por ejemplo
+    if (
+      noMejora(mejorSolucionVecina, solucion) ||
+      mejoraPoco(mejorSolucionVecina, solucion, porcentajeMinimoDeMejora)
+    ) {
+      ejecucionesParciales++;
+    } else {
+      ejecucionesParciales = 0;
+    }
   }
 
   return mejorSolucion;

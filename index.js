@@ -14,7 +14,7 @@ const solucionGreedy = tspGreedy(G);
 console.log("Solución - algoritmo greedy: ", solucionGreedy);
 
 //Búsqueda local
-const solucionBusquedaLocal = busquedaLocal(G.grafoCompleto, solucionGreedy, 50, 10);
+const solucionBusquedaLocal = busquedaLocal(G.grafoCompleto, solucionGreedy, 1000, 5, 10);
 console.log("Solución - búsqueda local: ", solucionBusquedaLocal);
 
 // //GRASP
