@@ -4,6 +4,8 @@
  * @param  {Int} i
  * @param  {Int} j
  * @return  {[Int]}
+ * @ordenDeComplejidad O(n), donde n es la cantidad de nodos.
+ *  No es O(1) porque existe una copia del array (O(n))
  */
 const swap = (circuito, i, j) => {
   let nuevoCircuito = circuito.map((x) => x);
@@ -21,6 +23,7 @@ const swap = (circuito, i, j) => {
  * @param  {Int} i
  * @param  {Int} j
  * @return  {Int}
+ * @ordenDeComplejidad O(1)
  */
 export const costoSwap = (M, solucion, costo, i, j) => {
   let nuevoCosto = costo;
@@ -41,13 +44,15 @@ export const costoSwap = (M, solucion, costo, i, j) => {
  * @param  {Matriz de adyacencias} M
  * @param  {[Int]} solucion
  * @return  {[Solución: {circuito: [Int] - costo: Int}]}
+ * @ordenDeComplejidad O(n^2), donde n es la cantidad de nodos
  */
 const generarSolucionesVecinas = (M, solucion) => {
   let { circuito, costo } = solucion;
   let soluciones = [];
   for (let index = 1; index < circuito.length - 2; index++) {
-    let nuevoCircuito = swap(solucion.circuito, index, index + 1);
-    let nuevoCosto = costoSwap(M, solucion.circuito, costo, index, index + 1);
+    // O(n-2)
+    let nuevoCircuito = swap(solucion.circuito, index, index + 1); // O(n)
+    let nuevoCosto = costoSwap(M, solucion.circuito, costo, index, index + 1); // O(1)
     soluciones.push({ circuito: nuevoCircuito, costo: nuevoCosto });
   }
   return soluciones;
@@ -59,9 +64,10 @@ const generarSolucionesVecinas = (M, solucion) => {
  * @param  {Matriz de adyacencias} M
  * @param  {[Int]} solucion
  * @return  {Solución: {circuito: [Int] - costo: Int}}
+ * @ordenDeComplejidad O(n^2), donde n es la cantidad de nodos
  */
 const encontrarMejorVecino = (M, solucion) => {
-  let solucionesVecinas = generarSolucionesVecinas(M, solucion);
+  let solucionesVecinas = generarSolucionesVecinas(M, solucion); // O(n^2)
   return solucionesVecinas.reduce((prev, curr) =>
     prev.costo < curr.costo ? prev : curr
   );
@@ -72,6 +78,7 @@ const encontrarMejorVecino = (M, solucion) => {
  * @param  {Int} porcentajeDeMejora
  * @param  {int} porcentajeMinimoDeMejora
  * @return  {Boolean}
+ * @ordenDeComplejidad O(1)
  */
 const noMejora = (nuevaSolucion, solucion) =>
   nuevaSolucion.costo >= solucion.costo;
@@ -81,6 +88,7 @@ const noMejora = (nuevaSolucion, solucion) =>
  * @param  {Int} porcentajeDeMejora
  * @param  {int} porcentajeMinimoDeMejora
  * @return  {Boolean}
+ * @ordenDeComplejidad O(1)
  */
 const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
   porcentajeDeMejora < porcentajeMinimoDeMejora;
@@ -91,12 +99,13 @@ const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
     - Si el mejor vecino tiene una mejora insignificante, vuelve a intentar y ejecuta otra busqueda local.
     - Si despues de determinados intentos más sigue sin conseguir un porcentaje de mejora aceptable, retorna la mejor solucion encontrada hasta el momento 
     - Despues de determinadas iteraciones, retorna la mejor solucion encontrada hasta el momento 
- * @param  {clase Grafo} grafo
+ * @param  {Grafo} G
  * @param  {Solución: {circuito: [Int] - costo: Int}} solucion
  * @param  {Int} ejecucionesPermitidas
  * @param  {Int} ejecucionesParcialesPermitidas
  * @param  {Int} porcentajeMinimoDeMejora
  * @return  {Solución: {circuito: [Int] - costo: Int}}
+ * @ordenDeComplejidad O(z x n^2), donde z es la cantidad de ejecuciones permitidas y n es la cantidad de nodos
  */
 const busquedaLocal = (
   G,
@@ -110,6 +119,7 @@ const busquedaLocal = (
 
   let mejorSolucion = solucion;
 
+  // O(Z), donde Z es la cantidad de ejecuciones permitidas. Se supone a la cantidad de ejecuciones mayor a la cantidad de ejecuciones parciales
   while (
     ejecuciones < ejecucionesPermitidas &&
     ejecucionesParciales < ejecucionesParcialesPermitidas
@@ -117,7 +127,7 @@ const busquedaLocal = (
     ejecuciones++;
     ejecucionesParciales++;
 
-    let mejorSolucionVecina = encontrarMejorVecino(G.matriz, mejorSolucion);
+    let mejorSolucionVecina = encontrarMejorVecino(G.matriz, mejorSolucion); // O(n^2), donde n es la cantidad de nodos
 
     const porcentajeDeMejora =
       100 - (mejorSolucionVecina.costo * 100) / mejorSolucion.costo;

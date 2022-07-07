@@ -3,6 +3,7 @@
  * @param  {Matriz de adyacencias} M
  * @param  {Int} i
  * @return  {[Int]}
+ * @ordenDeComplejidad O(n), donde n es la cantidad de nodos
  */
 const adyacentes = (M, i) =>
   M[i]
@@ -20,6 +21,7 @@ const adyacentes = (M, i) =>
  * @param  {Int} i
  * @param  {[Int]} visited
  * @return  {[Int]}
+ * @ordenDeComplejidad O(n), donde n es la cantidad de nodos
  */
 const adyacentesNoVisitados = (M, i, visited) =>
   M[i]
@@ -35,6 +37,7 @@ const adyacentesNoVisitados = (M, i, visited) =>
  * Ordena los nodos por menor peso
  * @param  {{Int, Int}} nodos_pesos
  * @return  {[Int]}
+ * @ordenDeComplejidad O(n x log n), donde n es la cantidad de nodos
  */
 const ordenarPorPesoMinimo = (nodos_pesos) =>
   nodos_pesos.sort((x, y) => x.peso - y.peso);
@@ -43,6 +46,7 @@ const ordenarPorPesoMinimo = (nodos_pesos) =>
  * Selecciona el nodo de menor peso
  * @param  {{Int, Int}} nodos_pesos
  * @return  {Int}
+ * @ordenDeComplejidad O(n x log n), donde n es la cantidad de nodos
  */
 const seleccionarNodoMasCercano = (nodos_pesos) =>
   ordenarPorPesoMinimo(nodos_pesos)[0];
@@ -53,8 +57,10 @@ const seleccionarNodoMasCercano = (nodos_pesos) =>
  * @param  {Matriz de adyacencias} M
  * @param  {Int} source
  * @return  {[Int]}
+ * @ordenDeComplejidad O(n^2), donde n es la cantidad de nodos
  */
 const ordenarPorSumaPesosMinimos = (nodos_pesos, M, source) => {
+  // O(n)
   let adyacentesConPesoMinimoSiguiente = nodos_pesos.map((nodo_peso) => {
     return {
       nodo: nodo_peso.nodo,
@@ -62,10 +68,10 @@ const ordenarPorSumaPesosMinimos = (nodos_pesos, M, source) => {
         nodo_peso.peso +
         seleccionarNodoMasCercano(
           adyacentes(M, nodo_peso.nodo).filter((x) => x.nodo !== source)
-        ).peso,
+        ).peso, // O(n x log n)
     };
   });
-  return ordenarPorPesoMinimo(adyacentesConPesoMinimoSiguiente);
+  return ordenarPorPesoMinimo(adyacentesConPesoMinimoSiguiente); // O(n x log n)
 };
 
 /**
@@ -74,6 +80,7 @@ const ordenarPorSumaPesosMinimos = (nodos_pesos, M, source) => {
  * @param  {Int} porcentaje
  * @param  {Int} elementosMinimos
  * @return  {[Int]}
+ * @ordenDeComplejidad O(n), donde n es la cantidad de nodos
  */
 const recortarPorPorcentaje = (nodos, porcentaje, elementosMinimos) => {
   if (porcentaje > 100) throw Error("El porcentaje no puede exceder el 100%");
@@ -95,6 +102,7 @@ const recortarPorPorcentaje = (nodos, porcentaje, elementosMinimos) => {
  * @param  {Int} porcentaje
  * @param  {Int} elementosMinimos
  * @return  {Int}
+ * @ordenDeComplejidad O(n), donde n es la cantidad de nodos
  */
 const seleccionAleatoria = (nodos, porcentaje, elementosMinimos) => {
   const elems = recortarPorPorcentaje(nodos, porcentaje, elementosMinimos);
@@ -105,13 +113,14 @@ const seleccionAleatoria = (nodos, porcentaje, elementosMinimos) => {
  * Calcula el costo del circuito
  * @param  {Matriz de adyacencias} M
  * @return  {Int}
+ * @ordenDeComplejidad O(n), donde n es la cantidad de nodos del circuito
  */
-export const costo = (M, res) => {
+export const costo = (M, circuito) => {
   let sum = 0;
   let i = 0;
-  while (i < res.length - 1) {
-    let current = res[i];
-    let next = res[i + 1];
+  while (i < circuito.length - 1) {
+    let current = circuito[i];
+    let next = circuito[i + 1];
     sum += M[current][next];
     i++;
   }
@@ -120,8 +129,9 @@ export const costo = (M, res) => {
 
 /**
  * Algoritmo greedy para problema de viajante de comercio
- * @param  {clase Grafo} grafo
+ * @param  {Grafo} G
  * @return  {Solución: {circuito: [Int] - costo: Int}}
+ * @ordenDeComplejidad O(n^3), donde n es la cantidad de nodos
  */
 const tspGreedy = (G) => {
   const M = G.matriz;
@@ -133,12 +143,12 @@ const tspGreedy = (G) => {
   res.push(source); //Agrego el nodo source a la solucion
 
   let index = source;
-  //Itero hasta haber visitado todos los nodos
+  //Itero hasta haber visitado todos los nodos. O(n)
   while (visited.size < G.n) {
-    let ady = adyacentesNoVisitados(M, index, visited); //Obtengo mis nodos adyacentes que no fueron visitados...
+    let ady = adyacentesNoVisitados(M, index, visited); //Obtengo mis nodos adyacentes que no fueron visitados... O(n)
 
-    let adyacentesOrdenados = ordenarPorSumaPesosMinimos(ady, M, index); //...Los ordeno por mi heuristica
-    let next = seleccionAleatoria(adyacentesOrdenados, 5, 3); //Aleatorizo la selección del próximo nodo (5% y 3 elementos minimos)
+    let adyacentesOrdenados = ordenarPorSumaPesosMinimos(ady, M, index); //...Los ordeno por mi heuristica. O(n^2)
+    let next = seleccionAleatoria(adyacentesOrdenados, 5, 3); //Aleatorizo la selección del próximo nodo (5% y 3 elementos minimos). O(n)
 
     index = next.nodo; //Me muevo al nodo que elegí
     visited.add(index); //Lo agrego a los visitados
