@@ -1,3 +1,10 @@
+/**
+ * Retorna el circuito que resulta de intercambiar de posición los nodos i y j
+ * @param  {[Int]} circuito
+ * @param  {Int} i
+ * @param  {Int} j
+ * @return  {[Int]}
+ */
 const swap = (circuito, i, j) => {
   let nuevoCircuito = circuito.map((x) => x);
   var x = nuevoCircuito[j];
@@ -6,7 +13,15 @@ const swap = (circuito, i, j) => {
   return nuevoCircuito;
 };
 
-//Calcula el costo de la solución con los nodos i y j intercambiados
+/**
+ * Calcula el costo del circuito con las posiciones de los nodos i y j intercambiadas
+ * @param  {Matriz de adyacencias} M
+ * @param  {[Int]} solucion
+ * @param  {Int} costo
+ * @param  {Int} i
+ * @param  {Int} j
+ * @return  {Int}
+ */
 export const costoSwap = (M, solucion, costo, i, j) => {
   let nuevoCosto = costo;
 
@@ -21,7 +36,12 @@ export const costoSwap = (M, solucion, costo, i, j) => {
   return nuevoCosto;
 };
 
-//Genera soluciones vecinas intercambiando nodos consecutivos que no sean ni el primero ni el último
+/**
+ * Genera y retorna soluciones vecinas intercambiando nodos consecutivos que no sean ni el primero ni el último
+ * @param  {Matriz de adyacencias} M
+ * @param  {[Int]} solucion
+ * @return  {[Solución: {circuito: [Int] - costo: Int}]}
+ */
 const generarSolucionesVecinas = (M, solucion) => {
   let { circuito, costo } = solucion;
   let soluciones = [];
@@ -34,6 +54,12 @@ const generarSolucionesVecinas = (M, solucion) => {
 };
 
 //Genera las soluciones vecinas y retorna la mejor
+/**
+ * Genera soluciones vecinas intercambiando nodos consecutivos que no sean ni el primero ni el último y retorna la de mejor costo
+ * @param  {Matriz de adyacencias} M
+ * @param  {[Int]} solucion
+ * @return  {Solución: {circuito: [Int] - costo: Int}}
+ */
 const encontrarMejorVecino = (M, solucion) => {
   let solucionesVecinas = generarSolucionesVecinas(M, solucion);
   return solucionesVecinas.reduce((prev, curr) =>
@@ -41,16 +67,37 @@ const encontrarMejorVecino = (M, solucion) => {
   );
 };
 
+/**
+ * Indica si la nueva solución no mejora
+ * @param  {Int} porcentajeDeMejora
+ * @param  {int} porcentajeMinimoDeMejora
+ * @return  {Boolean}
+ */
 const noMejora = (nuevaSolucion, solucion) =>
   nuevaSolucion.costo >= solucion.costo;
 
+/**
+ * Indica si la nueva solución es aceptable
+ * @param  {Int} porcentajeDeMejora
+ * @param  {int} porcentajeMinimoDeMejora
+ * @return  {Boolean}
+ */
 const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
   porcentajeDeMejora < porcentajeMinimoDeMejora;
 
-//Genera los vecinos, elige el mejor y lo compara con la solucion actual...
-// - Si el mejor vecino es de menor costo, lo elijo,
-// - Si el mejor vecino no mejora o mejora poco, vuelve a intentar y ejecuta otra busqueda local.
-// - Si despues de n intentos más sigue sin conseguir un porcentaje de mejora aceptable, retorna la mejor solucion encontrada hasta el momento
+/** Búsqueda local
+ * Genera los vecinos, elige el mejor y lo compara con la solucion actual...
+    - Si el mejor vecino es de menor costo, lo elijo,
+    - Si el mejor vecino tiene una mejora insignificante, vuelve a intentar y ejecuta otra busqueda local.
+    - Si despues de determinados intentos más sigue sin conseguir un porcentaje de mejora aceptable, retorna la mejor solucion encontrada hasta el momento 
+    - Despues de determinadas iteraciones, retorna la mejor solucion encontrada hasta el momento 
+ * @param  {clase Grafo} grafo
+ * @param  {Solución: {circuito: [Int] - costo: Int}} solucion
+ * @param  {Int} ejecucionesPermitidas
+ * @param  {Int} ejecucionesParcialesPermitidas
+ * @param  {Int} porcentajeMinimoDeMejora
+ * @return  {Solución: {circuito: [Int] - costo: Int}}
+ */
 const busquedaLocal = (
   G,
   solucion,

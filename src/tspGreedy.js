@@ -1,4 +1,9 @@
-// Retorna los adyacentes de un nodo
+/**
+ * Retorna los adyacentes de un nodo
+ * @param  {Matriz de adyacencias} M
+ * @param  {Int} i
+ * @return  {[Int]}
+ */
 const adyacentes = (M, i) =>
   M[i]
     .map(function (x, index) {
@@ -9,7 +14,13 @@ const adyacentes = (M, i) =>
     })
     .filter((x) => x.nodo !== i);
 
-// Retorna los adyacentes no visitados de un nodo
+/**
+ * Retorna los adyacentes no visitados de un nodo
+ * @param  {Matriz de adyacencias} M
+ * @param  {Int} i
+ * @param  {[Int]} visited
+ * @return  {[Int]}
+ */
 const adyacentesNoVisitados = (M, i, visited) =>
   M[i]
     .map(function (x, index) {
@@ -20,16 +31,29 @@ const adyacentesNoVisitados = (M, i, visited) =>
     })
     .filter((x) => x.nodo !== i && !visited.has(x.nodo));
 
-//Heuristica 1: Nodo más cercano ------------------------------------------------------------------------
+/**
+ * Ordena los nodos por menor peso
+ * @param  {{Int, Int}} nodos_pesos
+ * @return  {[Int]}
+ */
 const ordenarPorPesoMinimo = (nodos_pesos) =>
   nodos_pesos.sort((x, y) => x.peso - y.peso);
 
-//Heuristica 2: Nodo más cercano de dos niveles ------------------------------------------------------
-
+/** HEURÍSTICA 'Nodo más cercano'
+ * Selecciona el nodo de menor peso
+ * @param  {{Int, Int}} nodos_pesos
+ * @return  {Int}
+ */
 const seleccionarNodoMasCercano = (nodos_pesos) =>
   ordenarPorPesoMinimo(nodos_pesos)[0];
 
-//Ordena los nodos por la suma de los pesos del nodo próximo y el inmediatamente próximo mínimo
+/** HEURÍSTICA 'Nodo más cercano de dos niveles'
+ * Ordena los nodos por la suma de los pesos del nodo próximo y el inmediatamente próximo mínimo
+ * @param  {{Int, Int}} nodos_pesos
+ * @param  {Matriz de adyacencias} M
+ * @param  {Int} source
+ * @return  {[Int]}
+ */
 const ordenarPorSumaPesosMinimos = (nodos_pesos, M, source) => {
   let adyacentesConPesoMinimoSiguiente = nodos_pesos.map((nodo_peso) => {
     return {
@@ -44,29 +68,44 @@ const ordenarPorSumaPesosMinimos = (nodos_pesos, M, source) => {
   return ordenarPorPesoMinimo(adyacentesConPesoMinimoSiguiente);
 };
 
-// Aleatorizar selección: Toma un n % de elementos y selecciona uno al azar -----------------------------------
+/**
+ * Recorta la secuencia de nodos en base a un porcentaje
+ * @param  {[Int]} nodos
+ * @param  {Int} porcentaje
+ * @param  {Int} elementosMinimos
+ * @return  {[Int]}
+ */
 const recortarPorPorcentaje = (nodos, porcentaje, elementosMinimos) => {
-  if (porcentaje > 100)
-    throw Error('El porcentaje no puede exceder el 100%')
+  if (porcentaje > 100) throw Error("El porcentaje no puede exceder el 100%");
 
-  let endIndex = (nodos.length > elementosMinimos) ? elementosMinimos : nodos.length
-  
-  const factor = porcentaje / 100
-  if (factor < 1)
-    endIndex = nodos.length * factor
+  let endIndex =
+    nodos.length > elementosMinimos ? elementosMinimos : nodos.length;
 
-  if (endIndex > elementosMinimos)
-    return nodos.slice(0, endIndex) //Recorto el array para obtener uno nuevo con un % del original
-  else
-    return nodos.slice(0, elementosMinimos) //Recorto el array con 'elementosMinimos' elementos
-}
+  const factor = porcentaje / 100;
+  if (factor < 1) endIndex = nodos.length * factor;
 
+  if (endIndex > elementosMinimos) return nodos.slice(0, endIndex);
+  //Recorto el array para obtener uno nuevo con un % del original
+  else return nodos.slice(0, elementosMinimos); //Recorto el array con 'elementosMinimos' elementos
+};
+
+/**
+ * Recorta la secuencia de nodos en base a un porcentaje y retorna un elemento al azar entre los nodos del recorte
+ * @param  {[Int]} nodos
+ * @param  {Int} porcentaje
+ * @param  {Int} elementosMinimos
+ * @return  {Int}
+ */
 const seleccionAleatoria = (nodos, porcentaje, elementosMinimos) => {
-  const elems = recortarPorPorcentaje(nodos, porcentaje, elementosMinimos)
+  const elems = recortarPorPorcentaje(nodos, porcentaje, elementosMinimos);
   return elems[Math.floor(Math.random() * elems.length)]; //Obtengo un elem al azar entre los elegidos
 };
 
-//Calcula el costo de recorrer todos los nodos ---------------------------
+/**
+ * Calcula el costo del circuito
+ * @param  {Matriz de adyacencias} M
+ * @return  {Int}
+ */
 export const costo = (M, res) => {
   let sum = 0;
   let i = 0;
@@ -79,9 +118,13 @@ export const costo = (M, res) => {
   return sum;
 };
 
-// Algoritmo greedy para problema de viajante de comercio-------------------------------------------------
+/**
+ * Algoritmo greedy para problema de viajante de comercio
+ * @param  {clase Grafo} grafo
+ * @return  {Solución: {circuito: [Int] - costo: Int}}
+ */
 const tspGreedy = (G) => {
-  const M = G.matriz
+  const M = G.matriz;
   let res = []; //Inicializo array vacio para la solucion
   let visited = new Set(); //Inicializo set vacio para los nodos visitados
 

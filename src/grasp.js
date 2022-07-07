@@ -1,12 +1,32 @@
 import tspGreedy from "./tspGreedy.js";
 import busquedaLocal from "./busquedaLocal.js";
 
+/**
+ * Indica si la nueva solución no mejora
+ * @param  {Int} porcentajeDeMejora
+ * @param  {int} porcentajeMinimoDeMejora
+ * @return  {Boolean}
+ */
 const noMejora = (nuevaSolucion, solucion) =>
   nuevaSolucion.costo >= solucion.costo;
 
+/**
+ * Indica si la nueva solución es aceptable
+ * @param  {Int} porcentajeDeMejora
+ * @param  {int} porcentajeMinimoDeMejora
+ * @return  {Boolean}
+ */
 const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
   porcentajeDeMejora < porcentajeMinimoDeMejora;
 
+/**
+ * GRASP
+ * @param  {clase Grafo} grafo
+ * @param  {Int} ejecucionesPermitidas
+ * @param  {Int} ejecucionesParcialesPermitidas
+ * @param  {Int} porcentajeMinimoDeMejora
+ * @return  {Solución: {circuito: [Int] - costo: Int}}
+ */
 const grasp = (
   G,
   ejecucionesPermitidas,
