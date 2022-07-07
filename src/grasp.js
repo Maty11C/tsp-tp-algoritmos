@@ -53,7 +53,7 @@ const grasp = (
     ejecuciones++;
 
     const solucionGreedy = tspGreedy(G); // O(n^3)
-    const mejorSolucionBusquedaLocal = busquedaLocal(G, solucionGreedy, 50, 10); //**** O(z' x n^2), donde z' es la cantidad de ejecuciones permitidas y n es la cantidad de nodos
+    const mejorSolucionBusquedaLocal = busquedaLocal(G, solucionGreedy, 1000, 25, 5); // O(z' x n^2), donde z' es la cantidad de ejecuciones permitidas y n es la cantidad de nodos
 
     const porcentajeDeMejora =
       100 - (mejorSolucionBusquedaLocal.costo * 100) / mejorSolucion.costo;
@@ -71,7 +71,7 @@ const grasp = (
       mejorSolucion = mejorSolucionBusquedaLocal;
 
     console.log(
-      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo} - Porcentaje de mejora: ${porcentajeDeMejora}`
+      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo} - Porcentaje de mejora: ${porcentajeDeMejora > 0 ? porcentajeDeMejora : "negativo"}`
     );
   }
 
