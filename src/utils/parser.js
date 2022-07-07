@@ -35,18 +35,18 @@ const jsonToMatrix = (grafo) => {
   return M;
 };
 
-export const obtenerGrafoXml = (pathFile) => {
+export const obtenerGrafo = (pathFile) => {
   const json = xmlToJson(pathFile);
   const matrix = jsonToMatrix(json);
   return new Grafo(matrix);
 };
 
-export const obtenerGrafosXml = (path) => {
+export const obtenerGrafos = (path) => {
   const files = readdirSync(path);
 
   let grafos = [];
   files.forEach((nameFile) => {
-    const grafo = obtenerGrafoXml(`${path}/${nameFile}`);
+    const grafo = obtenerGrafo(`${path}/${nameFile}`);
     grafos.push(grafo);
   });
   return grafos;

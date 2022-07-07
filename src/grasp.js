@@ -1,37 +1,56 @@
 import tspGreedy from "./tspGreedy.js";
 import busquedaLocal from "./busquedaLocal.js";
 
-const grasp = (grafo, ejecucionesMaximas, porcentajeMinimoDeMejora) => {
-  let mejorSolucion = tspGreedy(grafo);
+const noMejora = (nuevaSolucion, solucion) =>
+  nuevaSolucion.costo >= solucion.costo;
+
+const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
+  porcentajeDeMejora < porcentajeMinimoDeMejora;
+
+const grasp = (
+  G,
+  ejecucionesPermitidas,
+  ejecucionesParcialesPermitidas,
+  porcentajeMinimoDeMejora
+) => {
   let ejecuciones = 0;
-  let continuar = true;
+  let ejecucionesParciales = 0;
 
-  while (continuar) {
-      ejecuciones++;
+  let mejorSolucion = {
+    circuito: [],
+    costo: Infinity,
+  };
 
-    //Aplico el algoritmo greedy a la matriz completa para obtener una primera solucion
-    const solucionGreedy = tspGreedy(grafo);
-    console.log("Solución de greedy: ", solucionGreedy);
+  while (
+    ejecuciones < ejecucionesPermitidas &&
+    ejecucionesParciales < ejecucionesParcialesPermitidas
+  ) {
+    ejecuciones++;
 
-    //Aplico busqueda local para encontrar una mejor solución
-    const mejorSolucionBusquedaLocal = busquedaLocal(grafo.grafoCompleto, solucionGreedy, 50, 10);
-    console.log("Mejor solución de búsqueda local: ", mejorSolucionBusquedaLocal);
+    const solucionGreedy = tspGreedy(G);
+    const mejorSolucionBusquedaLocal = busquedaLocal(G, solucionGreedy, 50, 10);
+
+    const porcentajeDeMejora =
+      100 - (mejorSolucionBusquedaLocal.costo * 100) / mejorSolucion.costo;
+
+    if (
+      noMejora(mejorSolucionBusquedaLocal, mejorSolucion) ||
+      mejoraPoco(porcentajeDeMejora, porcentajeMinimoDeMejora)
+    ) {
+      ejecucionesParciales++;
+    } else {
+      ejecucionesParciales = 0;
+    }
 
     if (mejorSolucionBusquedaLocal.costo < mejorSolucion.costo)
       mejorSolucion = mejorSolucionBusquedaLocal;
 
-    const porcentajeDeMejora =
-      100 - ((mejorSolucionBusquedaLocal.costo * 100) / mejorSolucion.costo);
-
-    // continuar =
-    //   ejecuciones < ejecucionesMaximas &&
-    //   porcentajeDeMejora > 0 &&
-    //   porcentajeDeMejora > porcentajeMinimoDeMejora;
-      continuar =
-      ejecuciones < ejecucionesMaximas
-
-      //TODO: No comparar con la ultima ejecución y comparar con las ultimas 10 por ejemplo
+    console.log(
+      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo} - Porcentaje de mejora: ${porcentajeDeMejora}`
+    );
   }
+
+  return mejorSolucion;
 };
 
 export default grasp;

@@ -41,25 +41,18 @@ const encontrarMejorVecino = (M, solucion) => {
   );
 };
 
-const noMejora = (mejorSolucionVecina, solucion) =>
-  mejorSolucionVecina.costo >= solucion.costo;
+const noMejora = (nuevaSolucion, solucion) =>
+  nuevaSolucion.costo >= solucion.costo;
 
-const mejoraPoco = (
-  mejorSolucionVecina,
-  solucion,
-  porcentajeMinimoDeMejora
-) => {
-  const porcentajeDeMejora =
-    100 - (mejorSolucionVecina.costo * 100) / solucion.costo;
-  return porcentajeDeMejora < porcentajeMinimoDeMejora;
-};
+const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
+  porcentajeDeMejora < porcentajeMinimoDeMejora;
 
 //Genera los vecinos, elige el mejor y lo compara con la solucion actual...
 // - Si el mejor vecino es de menor costo, lo elijo,
 // - Si el mejor vecino no mejora o mejora poco, vuelve a intentar y ejecuta otra busqueda local.
 // - Si despues de n intentos más sigue sin conseguir un porcentaje de mejora aceptable, retorna la mejor solucion encontrada hasta el momento
 const busquedaLocal = (
-  M,
+  G,
   solucion,
   ejecucionesPermitidas,
   ejecucionesParcialesPermitidas,
@@ -77,19 +70,22 @@ const busquedaLocal = (
     ejecuciones++;
     ejecucionesParciales++;
 
-    let mejorSolucionVecina = encontrarMejorVecino(M, mejorSolucion);
+    let mejorSolucionVecina = encontrarMejorVecino(G.matriz, mejorSolucion);
 
-    if (mejorSolucionVecina.costo < solucion.costo)
-      mejorSolucion = mejorSolucionVecina;
+    const porcentajeDeMejora =
+      100 - (mejorSolucionVecina.costo * 100) / mejorSolucion.costo;
 
     if (
       noMejora(mejorSolucionVecina, solucion) ||
-      mejoraPoco(mejorSolucionVecina, solucion, porcentajeMinimoDeMejora)
+      mejoraPoco(porcentajeDeMejora, porcentajeMinimoDeMejora)
     ) {
       ejecucionesParciales++;
     } else {
       ejecucionesParciales = 0;
     }
+
+    if (mejorSolucionVecina.costo < solucion.costo)
+      mejorSolucion = mejorSolucionVecina;
   }
 
   return mejorSolucion;

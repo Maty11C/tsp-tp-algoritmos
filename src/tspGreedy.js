@@ -80,18 +80,18 @@ export const costo = (M, res) => {
 };
 
 // Algoritmo greedy para problema de viajante de comercio-------------------------------------------------
-const tspGreedy = (grafo) => {
-  const M = grafo.grafoCompleto
+const tspGreedy = (G) => {
+  const M = G.matriz
   let res = []; //Inicializo array vacio para la solucion
   let visited = new Set(); //Inicializo set vacio para los nodos visitados
 
-  let source = grafo.nodos[0]; //Empiezo por el primer nodo del grafo
+  let source = G.nodoInicial(); //Empiezo por el primer nodo del grafo
   visited.add(source); //Agrego el nodo source a los visitados
   res.push(source); //Agrego el nodo source a la solucion
 
   let index = source;
   //Itero hasta haber visitado todos los nodos
-  while (visited.size < grafo.cantidadDeNodos) {
+  while (visited.size < G.n) {
     let ady = adyacentesNoVisitados(M, index, visited); //Obtengo mis nodos adyacentes que no fueron visitados...
 
     let adyacentesOrdenados = ordenarPorSumaPesosMinimos(ady, M, index); //...Los ordeno por mi heuristica
