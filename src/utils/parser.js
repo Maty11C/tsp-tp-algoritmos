@@ -35,10 +35,11 @@ const jsonToMatrix = (grafo) => {
   return M;
 };
 
-export const obtenerGrafo = (pathFile) => {
+export const obtenerGrafo = (path, fileName) => {
+  const pathFile = path + fileName;
   const json = xmlToJson(pathFile);
   const matrix = jsonToMatrix(json);
-  return new Grafo(matrix);
+  return new Grafo(fileName, matrix);
 };
 
 export const obtenerGrafos = (path) => {

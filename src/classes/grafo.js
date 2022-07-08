@@ -1,7 +1,8 @@
 import floyd from "../utils/floyd.js";
 
 export class Grafo {
-  constructor(M) {
+  constructor(nombre, M) {
+    this.nombre = nombre;
     this.matriz = floyd(M); //Se completa la matriz
     //TODO: Generar lista de adyacencias para poder obtener los adyacentes de un nodo en 0(1)
     this.nodos = Array.from(Array(M.length).keys());

@@ -1,10 +1,10 @@
-import * as grafosXml from "./resources/grafosXml.js";
+import * as GRAFOS_XML from "./src/constants/grafosXml.js";
 import { obtenerGrafo } from "./src/utils/parser.js";
 import tspGreedy from "./src/tspGreedy.js";
 import busquedaLocal from "./src/busquedaLocal.js";
 import grasp from "./src/grasp.js";
 
-const G = obtenerGrafo(`./resources/tests/${grafosXml.GRAFO_76_NODOS}`);
+const G = obtenerGrafo("./resources/tests/", GRAFOS_XML.GRAFO_14_NODOS);
 
 // //Algoritmo greedy
 // const solucionGreedy = tspGreedy(G);
@@ -14,5 +14,7 @@ const G = obtenerGrafo(`./resources/tests/${grafosXml.GRAFO_76_NODOS}`);
 // const solucionBusquedaLocal = busquedaLocal(G, solucionGreedy, 1000, 5, 10);
 // console.log("Solución - búsqueda local: ", solucionBusquedaLocal);
 
-const solucionGrasp = grasp(G, 1000, 25, 5);
-console.log("Solución - GRASP: ", solucionGrasp);
+const { solucion, grafico } = grasp(G, 1000, 500, 2);
+console.log("Solución - GRASP: ", solucion);
+
+grafico.exportar();

@@ -11,6 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "chartjs-node-canvas": "^4.1.6",
     "fs": "^0.0.1-security",
     "xml-js": "^1.6.11"
   }

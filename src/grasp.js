@@ -1,5 +1,6 @@
 import tspGreedy from "./tspGreedy.js";
 import busquedaLocal from "./busquedaLocal.js";
+import { Grafico } from "./classes/grafico.js";
 
 /**
  * Indica si la nueva solución no mejora
@@ -40,6 +41,9 @@ const grasp = (
   let ejecuciones = 0;
   let ejecucionesParciales = 0;
 
+  let iteraciones = [];
+  let costos = [];
+
   let mejorSolucion = {
     circuito: [],
     costo: Infinity,
@@ -53,7 +57,13 @@ const grasp = (
     ejecuciones++;
 
     const solucionGreedy = tspGreedy(G); // O(n^3)
-    const mejorSolucionBusquedaLocal = busquedaLocal(G, solucionGreedy, 1000, 25, 5); // O(z' x n^2), donde z' es la cantidad de ejecuciones permitidas y n es la cantidad de nodos
+    const mejorSolucionBusquedaLocal = busquedaLocal(
+      G,
+      solucionGreedy,
+      1000,
+      25,
+      5
+    ); // O(z' x n^2), donde z' es la cantidad de ejecuciones permitidas y n es la cantidad de nodos
 
     const porcentajeDeMejora =
       100 - (mejorSolucionBusquedaLocal.costo * 100) / mejorSolucion.costo;
@@ -70,12 +80,22 @@ const grasp = (
     if (mejorSolucionBusquedaLocal.costo < mejorSolucion.costo)
       mejorSolucion = mejorSolucionBusquedaLocal;
 
+    if (ejecuciones % 10 === 0) {
+      iteraciones.push(ejecuciones);
+      costos.push(mejorSolucion.costo);
+    }
+
     console.log(
-      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo} - Porcentaje de mejora: ${porcentajeDeMejora > 0 ? porcentajeDeMejora : "negativo"}`
+      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo.toFixed()} - Porcentaje de mejora: ${porcentajeDeMejora.toFixed()}%`
     );
   }
 
-  return mejorSolucion;
+  //TODO: Escribir la solucion en un .txt
+
+  return {
+    solucion: mejorSolucion,
+    grafico: new Grafico(G.nombre, iteraciones, costos),
+  };
 };
 
 export default grasp;
