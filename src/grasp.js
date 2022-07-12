@@ -29,8 +29,7 @@ const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
  * @param  {Int} ejecucionesParcialesPermitidas
  * @param  {Int} porcentajeMinimoDeMejora
  * @return  {Solución: {circuito: [Int] - costo: Int}}
- * @ordenDeComplejidad O(z) * O(n^3) * O(z' x n^2)
- * @ordenDeComplejidad O(z x z' x n^3), donde z es la cantidad de ejecuciones permitidas para grasp, z' es la cantidad de ejecuciones permitidas para búsqueda local y n es la cantidad de nodos
+ * @ordenDeComplejidad O(z) * (O(n^3) + O(z' x n^2)) = O(z) * O(n^3), donde z es la cantidad de ejecuciones permitidas para grasp y n es la cantidad de nodos
  */
 const grasp = (
   G,
@@ -43,6 +42,7 @@ const grasp = (
 
   let iteraciones = [];
   let costos = [];
+  let ejecucionDeMejoraConsiderable = 0;
 
   let mejorSolucion = {
     circuito: [],
@@ -78,6 +78,7 @@ const grasp = (
       ejecucionesParciales++;
     } else {
       ejecucionesParciales = 0;
+      ejecucionDeMejoraConsiderable = ejecuciones;
     }
 
     if (mejorSolucionBusquedaLocal.costo < mejorSolucion.costo)
@@ -89,7 +90,7 @@ const grasp = (
     }
 
     console.log(
-      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo.toFixed()} - Porcentaje de mejora: ${porcentajeDeMejora < 0 ? "-" : porcentajeDeMejora.toFixed()}%`
+      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo.toFixed()} - Mejora: ${porcentajeDeMejora.toFixed()}% - Última ejecución de mejora considerable: ${ejecucionDeMejoraConsiderable}`
     );
   }
 
