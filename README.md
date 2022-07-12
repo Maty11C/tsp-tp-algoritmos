@@ -60,6 +60,11 @@ Gráficos...
 
 - GRASP encuentra una solución cercana a la óptima en las primeras iteraciones. En las siguientes iteraciones el porcentaje de mejora pasa a ser muy bajo, nulo y mayormente negativo (peores soluciones).
 - ... 
+- Para obtener el grafico de scoring se tuvo que adaptar el porcentaje mínimo de mejora en base al costo óptimo del grafo.
+Para soluciones con costo óptimo bajo, por ej 700, el porcentaje debería ser alto, 3% o más, para considerar mejoras aceptables.
+Para soluciones con costo óptimo alto, por ej 80000, el porcentaje debería ser más bajo para considerar mejoras aceptables.
+- Para obtener el grafico de scoring se tuvo que adaptar el numero de reintentos.
+Para los grafos mas grandes los reintentos se aumentaron ya que en estos grafos se suelen obtener mejoras aceptables despues de un numero grande intentos.
 
 ## Aplicación
 

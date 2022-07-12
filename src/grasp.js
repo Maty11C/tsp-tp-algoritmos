@@ -49,6 +49,9 @@ const grasp = (
     costo: Infinity,
   };
 
+  iteraciones.push(ejecuciones);
+  costos.push(mejorSolucion.costo);
+
   // O(z), donde z es la cantidad de ejecuciones permitidas. Se supone a la cantidad de ejecuciones mayor a la cantidad de ejecuciones parciales
   while (
     ejecuciones < ejecucionesPermitidas &&
@@ -80,13 +83,13 @@ const grasp = (
     if (mejorSolucionBusquedaLocal.costo < mejorSolucion.costo)
       mejorSolucion = mejorSolucionBusquedaLocal;
 
-    if (ejecuciones % 10 === 0) {
+    if (ejecuciones % 5 === 0) {
       iteraciones.push(ejecuciones);
       costos.push(mejorSolucion.costo);
     }
 
     console.log(
-      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo.toFixed()} - Porcentaje de mejora: ${porcentajeDeMejora.toFixed()}%`
+      `Ejecuciones: ${ejecuciones} - Ejecuciones parciales: ${ejecucionesParciales} - Costo: ${mejorSolucion.costo.toFixed()} - Porcentaje de mejora: ${porcentajeDeMejora < 0 ? "-" : porcentajeDeMejora.toFixed()}%`
     );
   }
 

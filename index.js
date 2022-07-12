@@ -1,20 +1,12 @@
 import * as GRAFOS_XML from "./src/constants/grafosXml.js";
 import { obtenerGrafo } from "./src/utils/parser.js";
-import tspGreedy from "./src/tspGreedy.js";
-import busquedaLocal from "./src/busquedaLocal.js";
 import grasp from "./src/grasp.js";
 
-const G = obtenerGrafo("./resources/tests/", GRAFOS_XML.GRAFO_14_NODOS);
+const G = obtenerGrafo("./resources/tests/", GRAFOS_XML.GRAFO_96_NODOS);
 
-// //Algoritmo greedy
-// const solucionGreedy = tspGreedy(G);
-// console.log("Solución - algoritmo greedy: ", solucionGreedy);
-
-// //Búsqueda local
-// const solucionBusquedaLocal = busquedaLocal(G, solucionGreedy, 1000, 5, 10);
-// console.log("Solución - búsqueda local: ", solucionBusquedaLocal);
-
-const { solucion, grafico } = grasp(G, 1000, 500, 2);
+const { solucion, grafico } = grasp(G, 50000, 7000, 1);
 console.log("Solución - GRASP: ", solucion);
+
+//TODO: Despues hacer otro scoring para grasp(G, 50000, 5000, 5)
 
 grafico.exportar();
