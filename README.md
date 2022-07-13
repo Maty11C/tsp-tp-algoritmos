@@ -72,7 +72,7 @@ PONER IMAGENES DE REPORTES Y PRINTS DE EJECUCION EN CONSOLA
 
 Una vez realizados los reportes y obtenidas las cantidades finales para cada grafo, se generó el gráfico de scoring que determina la cantidad de iteraciones necesarias (eje Y) sobre cada grafo (eje X) que permite aproximar la cantidad de ejecuciones necesarias para encontrar un valor cercano al óptimo sin desperdiciar tiempo de cómputo.
 
-PONER IMAGEN DEL GRAFICO DE SCORING
+![Gráfico de scoring](/src/graficos/scoring.png)
 
 ### Conclusiones
 
