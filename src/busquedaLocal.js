@@ -94,55 +94,45 @@ const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
   porcentajeDeMejora < porcentajeMinimoDeMejora;
 
 /** Búsqueda local
- * Genera los vecinos, elige el mejor y lo compara con la solucion actual...
-    - Si el mejor vecino es de menor costo, lo elijo,
-    - Si el mejor vecino tiene una mejora insignificante, vuelve a intentar y ejecuta otra busqueda local.
-    - Si despues de determinados intentos más sigue sin conseguir un porcentaje de mejora aceptable, retorna la mejor solucion encontrada hasta el momento 
-    - Despues de determinadas iteraciones, retorna la mejor solucion encontrada hasta el momento 
+ * Genera todos los vecinos, elige el mejor y lo compara con la solucion actual...
+    - Si el mejor vecino es mejor que la solución actual, lo elijo y vuelvo a intentar mejorarlo
+    - Si el mejor vecino no es mejor que la solución actual, retorno la solución actual
  * @param  {Grafo} G
  * @param  {Solución: {circuito: [Int] - costo: Int}} solucion
  * @param  {Int} ejecucionesPermitidas
- * @param  {Int} ejecucionesParcialesPermitidas
  * @param  {Int} porcentajeMinimoDeMejora
  * @return  {Solución: {circuito: [Int] - costo: Int}}
- * @ordenDeComplejidad O(z x n^2), donde z es la cantidad de ejecuciones permitidas y n es la cantidad de nodos
+ * @ordenDeComplejidad O(z x n^2)
+ * z = cantidad de ejecuciones permitidas
+ * n = cantidad de nodos
  */
 const busquedaLocal = (
   G,
   solucion,
   ejecucionesPermitidas,
-  ejecucionesParcialesPermitidas,
   porcentajeMinimoDeMejora
 ) => {
   let ejecuciones = 0;
-  let ejecucionesParciales = 0;
-
   let mejorSolucion = solucion;
 
   // O(Z), donde Z es la cantidad de ejecuciones permitidas. Se supone a la cantidad de ejecuciones mayor a la cantidad de ejecuciones parciales
-  while (
-    ejecuciones < ejecucionesPermitidas &&
-    ejecucionesParciales < ejecucionesParcialesPermitidas
-  ) {
+  while (ejecuciones < ejecucionesPermitidas) {
     ejecuciones++;
-    ejecucionesParciales++;
 
     let mejorSolucionVecina = encontrarMejorVecino(G.matriz, mejorSolucion); // O(n^2), donde n es la cantidad de nodos
 
     const porcentajeDeMejora =
       100 - (mejorSolucionVecina.costo * 100) / mejorSolucion.costo;
 
+    if (mejorSolucionVecina.costo < solucion.costo)
+      mejorSolucion = mejorSolucionVecina;
+
     if (
       noMejora(mejorSolucionVecina, solucion) ||
       mejoraPoco(porcentajeDeMejora, porcentajeMinimoDeMejora)
     ) {
-      ejecucionesParciales++;
-    } else {
-      ejecucionesParciales = 0;
+      break;
     }
-
-    if (mejorSolucionVecina.costo < solucion.costo)
-      mejorSolucion = mejorSolucionVecina;
   }
 
   return mejorSolucion;

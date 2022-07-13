@@ -29,7 +29,10 @@ const mejoraPoco = (porcentajeDeMejora, porcentajeMinimoDeMejora) =>
  * @param  {Int} ejecucionesParcialesPermitidas
  * @param  {Int} porcentajeMinimoDeMejora
  * @return  {Solución: {circuito: [Int] - costo: Int}}
- * @ordenDeComplejidad O(z) * (O(n^3) + O(z' x n^2)) = O(z) * O(n^3), donde z es la cantidad de ejecuciones permitidas para grasp y n es la cantidad de nodos
+ * @ordenDeComplejidad O(z) * (O(n^3) + O(z' x n^2))
+ * z = cantidad de ejecuciones permitidas para grasp
+ * z' = cantidad de ejecuciones permitidas de búsqueda local
+ * n = cantidad de nodos
  */
 const grasp = (
   G,
