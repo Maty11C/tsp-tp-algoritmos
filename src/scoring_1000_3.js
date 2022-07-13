@@ -32,9 +32,8 @@ import { exportarGrafico } from "./utils/exporter.js";
  */
 
 const scoring = {
-  // 0: 0,
   [BURMA14]: Math.max(
-    //Costo aprox a óptimo: 3233
+    //Mejor costo encontrado: 3233
     9,
     22,
     136,
@@ -47,7 +46,7 @@ const scoring = {
     79
   ),
   [GR17]: Math.max(
-    //Costo aprox a óptimo: ?
+    //Mejor costo encontrado: ?
     32,
     18,
     34,
@@ -59,10 +58,10 @@ const scoring = {
     98,
     275
   ),
-  [GR21]: Math.max(3754, 240, 213, 46, 1308, 455, 4918, 300, 1527, 1485), //Costo aprox a óptimo: 1130
+  [GR21]: Math.max(3754, 240, 213, 46, 1308, 455, 4918, 300, 1527, 1485), //Mejor costo encontrado: 1130
   [GR24]: Math.max(484, 28, 1344, 29, 1607, 1623, 550, 142, 406, 4437),
   [FRI26]: Math.max(
-    //Costo aprox a óptimo: 700
+    //Mejor costo encontrado: 700
     1583,
     326,
     7,
@@ -75,7 +74,7 @@ const scoring = {
     4511
   ),
   [BAYG29]: Math.max(
-    //Costo aprox a óptimo: 1700
+    //Mejor costo encontrado: 1700
     599,
     529,
     537,
@@ -89,7 +88,7 @@ const scoring = {
   ),
   // "29'": 1,
   [DANTZIG42]: Math.max(
-    //Costo aprox a óptimo: 850
+    //Mejor costo encontrado: 850
     741,
     47,
     224,
@@ -102,7 +101,7 @@ const scoring = {
     835
   ),
   [GR48]: Math.max(
-    //Costo aprox a óptimo: 6101
+    //Mejor costo encontrado: 6101
     229,
     2675,
     3481,
@@ -116,7 +115,7 @@ const scoring = {
   ),
   // "48'": 1,
   [EIL51]: Math.max(
-    //Costo aprox a óptimo: 508
+    //Mejor costo encontrado: 508
     582,
     3540,
     62,
@@ -128,9 +127,9 @@ const scoring = {
     346,
     150
   ),
-  [BERLIN52]: Math.max(68, 8, 416, 1229, 811, 47, 14, 1116, 452, 2450), //Costo aprox a óptimo: 9087
+  [BERLIN52]: Math.max(68, 8, 416, 1229, 811, 47, 14, 1116, 452, 2450), //Mejor costo encontrado: 9087
   [BRAZIL58]: Math.max(
-    //Costo aprox a óptimo: 29041
+    //Mejor costo encontrado: 29041
     2646,
     154,
     6181,
@@ -142,16 +141,16 @@ const scoring = {
     2249,
     3167
   ),
-  [EIL76]: Math.max(255, 12, 269, 3992, 4536), //Costo aprox a óptimo: 701
-  [GR96]: Math.max(6, 52, 217, 84, 314, 2529), //Costo aprox a óptimo: 87966
-  [EIL101]: Math.max(30, 17, 20, 165, 9, 295), //Costo aprox a óptimo: 848
-  [GR120]: Math.max(4, 1, 72, 352), //Costo aprox a óptimo: 10332
-  [BIER127]: Math.max(55, 3224, 2469), //Costo aprox a óptimo: 169609
-  [CH130]: Math.max(41, 217, 97), //Costo aprox a óptimo: 10202
-  [GR137]: Math.max(25, 5, 917), //Costo aprox a óptimo: 115832
-  [CH150]: Math.max(3), //Costo aprox a óptimo: 11657
-  [BRG180]: Math.max(21, 1), //Costo aprox a óptimo: 3480
-  [D198]: Math.max(14, 380), //Costo aprox a óptimo: 26500
+  [EIL76]: Math.max(255, 12, 269, 3992, 4536), //Mejor costo encontrado: 701
+  [GR96]: Math.max(6, 52, 217, 84, 314, 2529), //Mejor costo encontrado: 87966
+  [EIL101]: Math.max(17, 20, 165, 9, 295, 837), //Mejor costo encontrado: 848
+  [GR120]: Math.max(4, 1, 72, 352, 9), //Mejor costo encontrado: 10332
+  [BIER127]: Math.max(55, 3224, 2469, 13, 88), //Mejor costo encontrado: 169609
+  [CH130]: Math.max(41, 217, 97, 128, 48), //Mejor costo encontrado: 10202
+  [GR137]: Math.max(25, 5, 917, 6, 42, 1838), //Mejor costo encontrado: 115832
+  [CH150]: Math.max(3, 10, 2093, 2, 29), //Mejor costo encontrado: 11657
+  [BRG180]: Math.max(21, 1, 2, 88, 3), //Mejor costo encontrado: 3480
+  [D198]: Math.max(14, 380, 23), //Mejor costo encontrado: 26500
 };
 
 const grafos = Object.keys(scoring);

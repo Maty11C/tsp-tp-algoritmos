@@ -40,36 +40,53 @@ Se propone una búsqueda local de la solución de la siguiente forma:
 
 ## 4. Optimización de búsqueda local
 
-Se contempla un margen de error en la búsqueda local agregando un porcentaje de mejora mínimo y una cantidad de reintentos máxima. Esto significa que en el caso de que en cierta iteración la solución no mejore (que su porcentaje de mejora no supere al porcentaje de mejora mínimo impuesto), el algoritmo de búsqueda local ya no va a retornar la mejor solución obtenida hasta el momento sino que va a continuar intentando obtener una mejor solución tantas veces como cantidad de reintentos máxima se haya definido.
-
-Agregar el margen de error lo que consigue es darle la posibilidad de seguir intentando obtener una mejor solución, que dado que el algoritmo tiene una cuota de aleatoriedad, es probable que luego de ciertos intentos lo consiga.
+Se agrega un porcentaje mínimo de mejora aceptable como criterio al comparar soluciones.
+Esto significa que en el caso de que el mejor vecino encontrado mejore la solución un porcentaje inferior al porcentaje mínimo de mejora, la nueva mejor solución pasará a ser la de menor costo pero no se va a continuar con una nueva iteración de búsqueda local, ya que se considera que la mejora encontrada fue mínima, por lo que no tendría sentido seguir computando.
 
 ## 5. Algoritmo GRASP
 
-Dado un número de ejecuciones máximas permitidas, un porcentaje de mejora mínimo y una cantidad de reintentos máxima, se propone un algoritmo GRASP de la siguiente forma:
-1. Obtiene una solución mediante el algoritmo greedy.
-2. Obtiene una solución mejor con búsqueda local a partir de la solución obtenida por el algoritmo greedy.
-3. Si la solución obtenida con búsqueda local tiene menor costo que la mejor solución conocida hasta el momento, la solución de la búsqueda local reemplaza a la mejor solución conocida y se continúa con una nueva iteración en caso de no haberse superado el número de ejecuciones máximas.
-Además, al igual que en búsqueda local, si el porcentaje de mejora no es significativo (el porcentaje de mejora con la última mejor solución encontrada es menor al porcentaje de mejora mínimo impuesto), se va a continuar intentando obtener una solución con un porcentaje de mejora significativo hasta como máximo una cantidad de reintentos determinada, en caso contrario se procede con la siguiente iteración normalmente.
+Dado un número de ejecuciones máximas permitidas, un porcentaje de mejora mínimo y una cantidad de reintentos máxima, se propone un algoritmo GRASP que intenta obtener la solución óptima del el problema del viajante de comercio en el que en cada iteración opera de la siguiente forma:
+1. Obtiene una solución "semilla" mediante el algoritmo greedy propuesto.
+2. Obtiene una nueva solución mediante el algoritmo de búsqueda local en base a la solución "semilla".
+3. Compara las dos soluciones y elige la de menor costo.
+
+El algoritmo repetirá la misma secuencia hasta que se presente alguno de los siguientes escenarios:
+- Se hayan alcanzado las ejecuciones máximas permitidas.
+- Se haya alcanzado la cantidad de reintentos máxima permitida. Esto significa que si el porcentaje de mejora de la nueva solución encontrada es negativo, nulo o mínimo, el algoritmo va a reintentar obtener una nueva solución con una mejora aceptable tantas veces como cantidad de reintentos se hayan definido. Entiendase como mejora mínima a la mejora que no supera el porcentaje de mejora mínimo definido.
+
+Una vez finalizadas las iteraciones, se retorna la última mejor solución encontrada.
 
 ## 6. Reportes
 
-Gráficos...
+La idea fue obtener un aproximado a la cantidad de iteraciones que se necesitan de GRASP para obtener la solución óptima o lo más cercana a la óptima para cada uno de los grafos de la siguiente manera:
+
+1. Se ejecuta GRASP en para el grafo con un setup definido de 50000 ejecuciones máximas, 5000 reintentos y mejora mínima aceptable de 3%.
+2. Se obtiene la última iteración en la que el algoritmo detecta una mejora aceptable mediante impresiones en consola y de exportación de gráfico de reporte en formato .png.
+3. Se registra el número de iteración reportado para el grafo.
+4. Se repiten los pasos anteriores una cantidad de veces suficiente para obtener una cantidad de iteraciones lógicas y medibles para el grafo.
+5. Una vez registrados todos los valores de las distintas ejecuciones, se selecciona al máximo de todos ellos.
+
+#### Ejemplos
+
+PONER IMAGENES DE REPORTES Y PRINTS DE EJECUCION EN CONSOLA
+
+Una vez realizados los reportes y obtenidas las cantidades finales para cada grafo, se generó el gráfico de scoring que determina la cantidad de iteraciones necesarias (eje Y) sobre cada grafo (eje X) que permite aproximar la cantidad de ejecuciones necesarias para encontrar un valor cercano al óptimo sin desperdiciar tiempo de cómputo.
+
+PONER IMAGEN DEL GRAFICO DE SCORING
 
 ### Conclusiones
 
-- GRASP encuentra una solución cercana a la óptima en las primeras iteraciones. En las siguientes iteraciones el porcentaje de mejora pasa a ser muy bajo, nulo y mayormente negativo (peores soluciones).
+- El algoritmo GRASP se apróxima a la solución óptima demasiado rápido, es decir, en las primeras iteraciones. En las siguientes iteraciones el porcentaje de mejora pasa a ser muy bajo, nulo y mayormente negativo (peores soluciones).
+- Las soluciones que el algoritmo GRASP consigue son cada vez menos cercanas a la óptima ni bien se aumenta el número de nodos del grafo.
+Al terminar las pruebas noté que mi porcentaje minimo de mejora aceptable fue muy ambicioso, y eso fue en parte lo que no permitia encontrar soluciones más cercanas a la óptima ya que solía descartar mejoras de 2%, 1% o menos, en particular en los grafos más grandes.
+Además, no considerar mejoras de menor porcentaje afectó también a que no se reinicie el contador de reintentos una vez que se encontraba una mejora mínima, lo que generaba que el algoritmo "corte antes de tiempo".
 - ... 
 
-## Aplicación
-
-...
-
-### Instructivo
+### Instructivo para exportar gráficos de scoring de un grafo
 
 1. Instalar dependencias:
    >npm install
-2. Iniciar aplicación:
+2. Indicar sobre qué grafo se va a ejecutar GRASP.
+   .........
+3. Ejecutar GRASP y exportar gráfico de reporte:
    >npm start
-
----
