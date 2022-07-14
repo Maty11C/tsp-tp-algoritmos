@@ -101,7 +101,11 @@ const grasp = (
 
   return {
     solucion: mejorSolucion,
-    grafico: new Grafico(G.nombre, iteraciones, costos),
+    grafico: new Grafico(
+      G.nombre,
+      { label: "Iteración", values: iteraciones },
+      { label: "Costo", values: costos }
+    ),
   };
 };
 

@@ -12,21 +12,45 @@ const chartJSNodeCanvas = new ChartJSNodeCanvas({
   backgroundColour,
 });
 
-export const exportarGrafico = async (fileName, valuesX, valuesY) => {
+export const exportarGrafico = async (fileName, axisX, axisY) => {
   const configuration = {
     type: "line",
     data: {
-      labels: valuesX,
+      labels: axisX.values,
       datasets: [
         {
           label: fileName,
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
-          data: valuesY,
+          data: axisY.values,
         },
       ],
     },
-    options: {},
+    options: {
+      scales: {
+        xAxes: {
+          title: {
+            display: true,
+            text: axisX.label,
+            font: {
+              size: 15,
+            },
+          },
+        },
+        yAxes: {
+          title: {
+            display: true,
+            text: axisY.label,
+            font: {
+              size: 15,
+            },
+          },
+          ticks: {
+            precision: 0,
+          },
+        },
+      },
+    },
     plugins: [],
   };
 

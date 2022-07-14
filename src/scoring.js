@@ -11,33 +11,55 @@ import { exportarGrafico } from "./utils/exporter.js";
 
 const scoring = {
   [GRAFOS._14_NODOS]: Math.max(
-    //Mejor costo encontrado: 3233
-    9,
-    22,
-    136,
-    72,
-    51,
-    143,
-    30,
-    28,
-    22,
-    79
+    //Mejor costo encontrado: 3323
+    651,
+    756,
+    231,
+    1675,
+    47,
+    410,
+    229,
+    1594,
+    309,
+    2928
   ),
   [GRAFOS._17_NODOS]: Math.max(
-    //Mejor costo encontrado: ?
-    32,
-    18,
-    34,
-    22,
-    30,
-    469,
-    16,
-    147,
-    98,
+    //Mejor costo encontrado: 2182
+    1957,
+    898,
+    3348,
+    220,
+    116,
+    188,
+    52,
+    942,
+    674,
     275
   ),
-  [GRAFOS._21_NODOS]: Math.max(3754, 240, 213, 46, 1308, 455, 4918, 300, 1527, 1485), //Mejor costo encontrado: 1130
-  [GRAFOS._24_NODOS]: Math.max(484, 28, 1344, 29, 1607, 1623, 550, 142, 406, 4437),
+  [GRAFOS._21_NODOS]: Math.max(
+    3754,
+    240,
+    213,
+    46,
+    1308,
+    455,
+    4918,
+    300,
+    1527,
+    1485
+  ), //Mejor costo encontrado: 1130
+  [GRAFOS._24_NODOS]: Math.max(
+    484,
+    28,
+    1344,
+    29,
+    1607,
+    1623,
+    550,
+    142,
+    406,
+    4437
+  ),
   [GRAFOS._26_NODOS]: Math.max(
     //Mejor costo encontrado: 700
     1583,
@@ -51,7 +73,7 @@ const scoring = {
     1469,
     4511
   ),
-  [GRAFOS._29_NODOS_]: Math.max(
+  [GRAFOS._29_NODOS]: Math.max(
     //Mejor costo encontrado: 1700
     599,
     529,
@@ -64,7 +86,19 @@ const scoring = {
     2,
     3957
   ),
-  // "29'": 1,
+  [GRAFOS._29_NODOS_]: Math.max(
+    //Mejor costo encontrado: 2399
+    2155,
+    2091,
+    60,
+    3180,
+    1541,
+    309,
+    1821,
+    341,
+    93,
+    87
+  ),
   [GRAFOS._42_NODOS]: Math.max(
     //Mejor costo encontrado: 850
     741,
@@ -91,7 +125,19 @@ const scoring = {
     3459,
     2891
   ),
-  // "48'": 1,
+  [GRAFOS._48_NODOS_]: Math.max(
+    //Mejor costo encontrado: 14523
+    2606,
+    346,
+    229,
+    1371,
+    35,
+    2352,
+    2706,
+    1162,
+    3493,
+    1619
+  ),
   [GRAFOS._51_NODOS]: Math.max(
     //Mejor costo encontrado: 508
     582,
@@ -105,7 +151,18 @@ const scoring = {
     346,
     150
   ),
-  [GRAFOS._52_NODOS]: Math.max(68, 8, 416, 1229, 811, 47, 14, 1116, 452, 2450), //Mejor costo encontrado: 9087
+  [GRAFOS._52_NODOS]: Math.max(
+    8,
+    416,
+    1229,
+    811,
+    47,
+    14,
+    1116,
+    452,
+    2450,
+    3932
+  ), //Mejor costo encontrado: 9087
   [GRAFOS._57_NODOS]: Math.max(
     //Mejor costo encontrado: 29041
     2646,
@@ -128,10 +185,14 @@ const scoring = {
   [GRAFOS._137_NODOS]: Math.max(25, 5, 917, 6, 42, 1838), //Mejor costo encontrado: 115832
   [GRAFOS._150_NODOS]: Math.max(3, 10, 2093, 2, 29), //Mejor costo encontrado: 11657
   [GRAFOS._180_NODOS]: Math.max(21, 1, 2, 88, 3), //Mejor costo encontrado: 3480
-  [GRAFOS._198_NODOS]: Math.max(14, 380, 23), //Mejor costo encontrado: 26500
+  [GRAFOS._198_NODOS]: Math.max(14, 380, 23, 9, 595), //Mejor costo encontrado: 26500
 };
 
 const grafos = Object.keys(scoring);
 const iteracionesMaximas = Object.values(scoring);
 
-exportarGrafico("Scoring", grafos, iteracionesMaximas);
+exportarGrafico(
+  "scoring",
+  { label: "Grafo", values: grafos },
+  { label: "Iteración", values: iteracionesMaximas }
+);
