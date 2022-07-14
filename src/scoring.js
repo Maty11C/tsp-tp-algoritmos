@@ -185,14 +185,14 @@ const scoring = {
   [GRAFOS._137_NODOS]: Math.max(25, 5, 917, 6, 42, 1838), //Mejor costo encontrado: 115832
   [GRAFOS._150_NODOS]: Math.max(3, 10, 2093, 2, 29), //Mejor costo encontrado: 11657
   [GRAFOS._180_NODOS]: Math.max(21, 1, 2, 88, 3), //Mejor costo encontrado: 3480
-  [GRAFOS._198_NODOS]: Math.max(14, 380, 23, 9, 595), //Mejor costo encontrado: 26500
+  [GRAFOS._198_NODOS]: Math.max(14, 380, 23, 9, 595, 99), //Mejor costo encontrado: 26500
 };
 
 const grafos = Object.keys(scoring);
 const iteracionesMaximas = Object.values(scoring);
 
 exportarGrafico(
-  "scoring",
+  "Scoring",
   { label: "Grafo", values: grafos },
   { label: "Iteración", values: iteracionesMaximas }
 );

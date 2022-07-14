@@ -1,4 +1,4 @@
-# TP Algoritmos - Metaheurísticas
+# **TP Algoritmos - Metaheurísticas**
 
 1. Proponer un algoritmo goloso para el problema del viajante de comercio.
 2. Aleatorizar el algoritmo anterior.
@@ -66,13 +66,11 @@ La idea fue obtener un aproximado a la cantidad de iteraciones que se necesitan 
 4. Se repiten los pasos anteriores una cantidad de veces suficiente para obtener una cantidad de iteraciones lógicas y medibles para el grafo.
 5. Una vez registrados todos los valores de las distintas ejecuciones, se selecciona al máximo de todos ellos.
 
-#### Ejemplos
-
-PONER IMAGENES DE REPORTES Y PRINTS DE EJECUCION EN CONSOLA
+Se adjuntan [gráficos de scoring](/src/graficos/Graficos.md) de las pruebas en cada uno de los grafos.
 
 Una vez realizados los reportes y obtenidas las cantidades finales para cada grafo, se generó el gráfico de scoring que determina la cantidad de iteraciones necesarias (eje Y) sobre cada grafo (eje X) que permite aproximar la cantidad de ejecuciones necesarias para encontrar un valor cercano al óptimo sin desperdiciar tiempo de cómputo.
 
-![Gráfico de scoring](/src/graficos/scoring.png)
+![Gráfico de scoring](/src/graficos/Scoring.png)
 
 ### Conclusiones
 
@@ -82,11 +80,18 @@ Al terminar las pruebas noté que mi porcentaje minimo de mejora aceptable fue m
 Además, no considerar mejoras de menor porcentaje afectó también a que no se reinicie el contador de reintentos una vez que se encontraba una mejora mínima, lo que generaba que el algoritmo "corte antes de tiempo".
 - ... 
 
+---
+
 ### Instructivo para exportar gráficos de scoring de un grafo
 
 1. Instalar dependencias:
    >npm install
-2. Indicar sobre qué grafo se va a ejecutar GRASP.
-   .........
-3. Ejecutar GRASP y exportar gráfico de reporte:
+
+2. Abrir archivo *index.js* e indicar sobre qué grafo de la batería ejecutar GRASP. Por ejemplo:
+   >const G = obtenerGrafo("./resources/tests/", GRAFOS_XML._198_NODOS);
+
+3. Determinar los parámetros de GRASP. Por ejemplo:
+   >const { solucion, grafico } = grasp(G, 50000, 5000, 3);
+
+3. Ejecutar GRASP y exportar gráfico de scoring:
    >npm start

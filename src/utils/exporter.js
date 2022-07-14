@@ -19,7 +19,6 @@ export const exportarGrafico = async (fileName, axisX, axisY) => {
       labels: axisX.values,
       datasets: [
         {
-          label: fileName,
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
           data: axisY.values,
@@ -48,6 +47,22 @@ export const exportarGrafico = async (fileName, axisX, axisY) => {
           ticks: {
             precision: 0,
           },
+        },
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: fileName,
+          font: {
+            size: 50,
+          },
+          padding: {
+            top: 10,
+            bottom: 30,
+          },
+        },
+        legend: {
+          display: false,
         },
       },
     },
