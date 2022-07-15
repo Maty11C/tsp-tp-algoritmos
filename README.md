@@ -70,7 +70,7 @@ La idea fue obtener un aproximado a la cantidad de iteraciones que se necesitan 
 4. Se repiten los pasos anteriores una cantidad de veces suficiente para obtener una cantidad de iteraciones lógicas y medibles para el grafo.
 5. Una vez registrados todos los valores de las distintas ejecuciones, se selecciona al máximo de todos ellos.
 
-Se adjuntan, a modo de ejemplo, los [gráficos de scoring](/src/graficos/Graficos.md) de alguna de las ejecuciones de GRASP para cada uno de los grafos, en donde resulta evidente el instante (número de iteración) en que la solución no mejora.
+Se adjuntan, a modo de ejemplo, los [gráficos de scoring](/src/graficos/Graficos.md) de alguna de las ejecuciones de GRASP para cada uno de los grafos, en donde resulta evidente el instante (número de iteración) en que la solución deja de mejorar.
 
 Una vez realizados los reportes y obtenidas las cantidades finales para cada grafo, se generó el gráfico de scoring que determina la cantidad de iteraciones necesarias (eje Y) sobre cada grafo (eje X) que permite aproximar la cantidad de ejecuciones necesarias para encontrar un valor cercano al óptimo sin desperdiciar tiempo de cómputo.
 
