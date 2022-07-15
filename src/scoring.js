@@ -37,6 +37,7 @@ const scoring = {
     275
   ),
   [GRAFOS._21_NODOS]: Math.max(
+    //Mejor costo encontrado: 1130
     3754,
     240,
     213,
@@ -47,8 +48,9 @@ const scoring = {
     300,
     1527,
     1485
-  ), //Mejor costo encontrado: 1130
+  ),
   [GRAFOS._24_NODOS]: Math.max(
+    //Mejor costo encontrado: 7027
     484,
     28,
     1344,
@@ -88,7 +90,6 @@ const scoring = {
   ),
   [GRAFOS._29_NODOS_]: Math.max(
     //Mejor costo encontrado: 2399
-    2155,
     2091,
     60,
     3180,
@@ -97,7 +98,8 @@ const scoring = {
     1821,
     341,
     93,
-    87
+    87,
+    4131
   ),
   [GRAFOS._42_NODOS]: Math.max(
     //Mejor costo encontrado: 850
@@ -152,6 +154,7 @@ const scoring = {
     150
   ),
   [GRAFOS._52_NODOS]: Math.max(
+    //Mejor costo encontrado: 9087
     8,
     416,
     1229,
@@ -162,7 +165,7 @@ const scoring = {
     452,
     2450,
     3932
-  ), //Mejor costo encontrado: 9087
+  ),
   [GRAFOS._57_NODOS]: Math.max(
     //Mejor costo encontrado: 29041
     2646,
@@ -176,16 +179,16 @@ const scoring = {
     2249,
     3167
   ),
-  [GRAFOS._76_NODOS]: Math.max(255, 12, 269, 3992, 4536), //Mejor costo encontrado: 701
+  [GRAFOS._76_NODOS]: Math.max(255, 12, 269, 3992, 4536, 6, ), //Mejor costo encontrado: 701
   [GRAFOS._96_NODOS]: Math.max(6, 52, 217, 84, 314, 2529), //Mejor costo encontrado: 87966
   [GRAFOS._101_NODOS]: Math.max(17, 20, 165, 9, 295, 837), //Mejor costo encontrado: 848
-  [GRAFOS._120_NODOS]: Math.max(4, 1, 72, 352, 9), //Mejor costo encontrado: 10332
+  [GRAFOS._120_NODOS]: Math.max(4, 1, 72, 352, 9, 26), //Mejor costo encontrado: 10332
   [GRAFOS._127_NODOS]: Math.max(55, 3224, 2469, 13, 88), //Mejor costo encontrado: 169609
   [GRAFOS._130_NODOS]: Math.max(41, 217, 97, 128, 48), //Mejor costo encontrado: 10202
   [GRAFOS._137_NODOS]: Math.max(25, 5, 917, 6, 42, 1838), //Mejor costo encontrado: 115832
-  [GRAFOS._150_NODOS]: Math.max(3, 10, 2093, 2, 29), //Mejor costo encontrado: 11657
-  [GRAFOS._180_NODOS]: Math.max(21, 1, 2, 88, 3), //Mejor costo encontrado: 3480
-  [GRAFOS._198_NODOS]: Math.max(14, 380, 23, 9, 595, 99), //Mejor costo encontrado: 26500
+  [GRAFOS._150_NODOS]: Math.max(3, 10, 2093, 2, 29, 231, 79), //Mejor costo encontrado: 11657
+  [GRAFOS._180_NODOS]: Math.max(21, 1, 2, 88, 3, 4, 1), //Mejor costo encontrado: 3480
+  [GRAFOS._198_NODOS]: Math.max(14, 380, 23, 9, 595, 99, 12), //Mejor costo encontrado: 26500
 };
 
 const grafos = Object.keys(scoring);

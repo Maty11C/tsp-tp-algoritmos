@@ -66,7 +66,7 @@ La idea fue obtener un aproximado a la cantidad de iteraciones que se necesitan 
 4. Se repiten los pasos anteriores una cantidad de veces suficiente para obtener una cantidad de iteraciones lógicas y medibles para el grafo.
 5. Una vez registrados todos los valores de las distintas ejecuciones, se selecciona al máximo de todos ellos.
 
-Se adjuntan [gráficos de scoring](/src/graficos/Graficos.md) de las pruebas en cada uno de los grafos.
+Se adjuntan, a modo de ejemplo, los [gráficos de scoring](/src/graficos/Graficos.md) de alguna de las ejecuciones de GRASP para cada uno de los grafos.
 
 Una vez realizados los reportes y obtenidas las cantidades finales para cada grafo, se generó el gráfico de scoring que determina la cantidad de iteraciones necesarias (eje Y) sobre cada grafo (eje X) que permite aproximar la cantidad de ejecuciones necesarias para encontrar un valor cercano al óptimo sin desperdiciar tiempo de cómputo.
 
@@ -75,23 +75,26 @@ Una vez realizados los reportes y obtenidas las cantidades finales para cada gra
 ### Conclusiones
 
 - El algoritmo GRASP se apróxima a la solución óptima demasiado rápido, es decir, en las primeras iteraciones. En las siguientes iteraciones el porcentaje de mejora pasa a ser muy bajo, nulo y mayormente negativo (peores soluciones).
-- Las soluciones que el algoritmo GRASP consigue son cada vez menos cercanas a la óptima ni bien se aumenta el número de nodos del grafo.
-Al terminar las pruebas noté que mi porcentaje minimo de mejora aceptable fue muy ambicioso, y eso fue en parte lo que no permitia encontrar soluciones más cercanas a la óptima ya que solía descartar mejoras de 2%, 1% o menos, en particular en los grafos más grandes.
-Además, no considerar mejoras de menor porcentaje afectó también a que no se reinicie el contador de reintentos una vez que se encontraba una mejora mínima, lo que generaba que el algoritmo "corte antes de tiempo".
-- ... 
+
+- El gráfico denota que a mayor cantidad de nodos en un grafo, mayor será la cantidad de iteraciones para encontrar una solución óptima o cercana a la misma sin desperdiciar tiempo de cómputo. Es importante aclarar que este comportamiento se refleja solamente en los grafos chicos; llámese chicos a los grafos que constan de hasta aproximadamente 70 nodos. A partir de grafos más grandes el comportamiento y los resultados son distintos.
+- Para los grafos más grandes, por el contrario al punto anterior, a mayor cantidad de nodos en un grafo, menor será la cantidad de iteraciones necesarias. De las pruebas en los grafos más grandes deduje que la poca cantidad de iteraciones necesarias se debía a que los costos de las soluciones obtenidas distaban mucho más de la solución óptima, es decir que las soluciones eran cada vez peores. Si bien los resultados del gráfico de scoring denotan mucha disparidad entre grafos de cantidad de nodos similares, se evidencia una ligera tendencia a necesitar cada vez menos iteraciones en cuanto la cantidad de nodos incrementa.
+- Como consecuencia de la conclusión del punto anterior, noté que mi porcentaje mínimo de mejora aceptable (3%) fue muy ambicioso. Esto creo que fue, entre otros motivos, lo que no me permitía encontrar soluciones más cercanas a la óptima ya que despreciaba mejoras mínimas que debería haber considerado como aceptables.
+- Además, la decisión de definir un porcentaje de mejora muy alto, llevó al algoritmo a no reiniciar el contador de reintentos cuando se encontraba con una mejora despreciable y por ende el tiempo de ejecución del algoritmo no se extendía lo suficiente como para poder encontrar otra posible mejora. Este recorte en el tiempo de ejecución entiendo que fue la principal causa de no encontrar un número de iteraciones máximas superior; dicho de otro modo, si la cantidad de reintentos se reiniciara con más frecuencia, sería más probable encontrar un número de iteración máxima superior.
 
 ---
 
-### Instructivo para exportar gráficos de scoring de un grafo
+### Instructivo para ejecutar GRASP
 
 1. Instalar dependencias:
    >npm install
 
-2. Abrir archivo *index.js* e indicar sobre qué grafo de la batería ejecutar GRASP. Por ejemplo:
+2. Indicar la cantidad de nodos del grafo en el archivo *index.js*. Por ejemplo:
    >const G = obtenerGrafo("./resources/tests/", GRAFOS_XML._198_NODOS);
 
 3. Determinar los parámetros de GRASP. Por ejemplo:
    >const { solucion, grafico } = grasp(G, 50000, 5000, 3);
+   
+   50000 ejecuciones máximas, 5000 reintentos y 3% de porcentaje de mejora mínima.
 
 3. Ejecutar GRASP y exportar gráfico de scoring:
    >npm start

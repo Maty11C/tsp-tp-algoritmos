@@ -1,3 +1,22 @@
 <img src="grafos/burma14.png" width="350"/>
-
-COMPLETAR CON MÁS GRAFICOS
+<img src="grafos/gr21.png" width="350"/>
+<img src="grafos/gr24.png" width="350"/>
+<img src="grafos/fri26.png" width="350"/>
+<img src="grafos/bayg29.png" width="350"/>
+<img src="grafos/bays29.png" width="350"/>
+<img src="grafos/dantzig42.png" width="350"/>
+<img src="grafos/gr48.png" width="350"/>
+<img src="grafos/att48.png" width="350"/>
+<img src="grafos/eil51.png" width="350"/>
+<img src="grafos/berlin52.png" width="350"/>
+<img src="grafos/brazil58.png" width="350"/>
+<img src="grafos/eil76.png" width="350"/>
+<img src="grafos/gr96.png" width="350"/>
+<img src="grafos/eil101.png" width="350"/>
+<img src="grafos/gr120.png" width="350"/>
+<img src="grafos/bier127.png" width="350"/>
+<img src="grafos/ch130.png" width="350"/>
+<img src="grafos/gr137.png" width="350"/>
+<img src="grafos/ch150.png" width="350"/>
+<img src="grafos/brg180.png" width="350"/>
+<img src="grafos/d198.png" width="350"/>
